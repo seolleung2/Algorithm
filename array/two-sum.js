@@ -19,41 +19,44 @@
  * @return {number[]}
  */
 
+/**
+ * 나의 풀이 : 이중 반복문 (for) 사용
+ *
+ * 제일 먼저 생각난 방법
+ * n 개의 숫자 배열에서, 두 숫자를 더하는 경우의 수는
+ * 2 + 7, 2 + 11, 2 + 15, 7 + 11, 7 + 15, 11 + 15 (6가지 경우)
+ * 위의 경우에서는 즉 (n - 1)! >>>>>>> 3! 3 * 2 * 1 === 6
+ *
+ * 맨 앞의 수 nums[0] 은, nums[0] + nums[1], nums[0] + nums[2], nums[0] + nums[3] 까지 더할 수 있다.
+ * 그 다음 수 nums[1] 은, nums[1] + nums[2], nums[1] + nums[3]
+ * 그 다음 수 nums[2] 는, nums[2] + nums[3]
+ *
+ * 이 모든 경우의 수에서 (6가지), target (9) 이 되는 경우의 수를 if 로 뽑아낸다.
+ * map, filter 배열함수를 써볼 수도 있잖은가? 그리고 찾은 수의 indexOf 또는 includes
+ * */
+
 let nums = [2, 7, 11, 15, 18];
-// n 개의 숫자 배열에서, 두 숫자를 더하는 경우의 수는
-// 2 + 7, 2 + 11, 2 + 15, 7 + 11, 7 + 15, 11 + 15 (6가지 경우)
-// 위의 경우에서는 즉 (n - 1)! >>>>>>> 3! 3 * 2 * 1 === 6
+function twoSum(nums, target) {
+  let resultArr = [];
+  for (let i = 0; i < nums.length; i++) {
+    for (let j = i + 1; j < nums.length; j++) {
+      let sum = nums[i] + nums[j];
 
-// 맨 앞의 수 nums[0] 은, nums[0] + nums[1], nums[0] + nums[2], nums[0] + nums[3] 까지 더할 수 있다.
+      if (sum === target) {
+        resultArr.push(i);
+        resultArr.push(j);
+      }
+    }
+  }
+  return resultArr;
+}
 
-// 그 다음 수 nums[1] 은, nums[1] + nums[2], nums[1] + nums[3]
+let answer = twoSum(nums, 18);
 
-// 그 다음 수 nums[2] 는, nums[2] + nums[3]
-
-// 이 모든 경우의 수에서 (6가지), target (9) 이 되는 경우의 수를 if 로 뽑아낸다.
-
-// // map, filter 배열함수를 써볼 수도 있잖은가? 그리고 찾은 수의 indexOf 또는 includes
-// function twoSum(nums, target) {
-//   let resultArr = [];
-//   for (let i = 0; i < nums.length; i++) {
-//     for (let j = i + 1; j < nums.length; j++) {
-//       let sum = nums[i] + nums[j];
-
-//       if (sum === target) {
-//         resultArr.push(i);
-//         resultArr.push(j);
-//       }
-//     }
-//   }
-//   return resultArr;
-// }
-
-// let answer = twoSum(nums, 18);
-
-// console.log(answer);
+console.log(answer);
 
 /**
- * Reference Code
+ * Reference Code Below
  *
  * let nums = [2, 7, 11, 15, 18];
  * target = 9 라고 가정하고 아래 코드를 보자
