@@ -68,3 +68,49 @@ console.log(answer);
 // ! 4. 배열 비교를 위해서 JSON.stringify 로 변환함.. >>>>> [ '[-1,0,1]', '[-1,-1,2]', '[-1,0,1]' ]
 // ! 5. 나온 배열에 filter 로 중복 제거함.
 // ! 6. JSON.parse 로 문자열 모양을 떼고 배열로 변신시킴
+
+// Reference Code
+/**
+ * @param {number[]} nums
+ * @return {number[][]}
+ */
+const threeSum = (nums) => {
+  const result = [];
+
+  // Step 1. Sort the nums array
+  // This can help us easily avoid duplication later on
+  nums.sort((a, b) => a - b);
+
+  // Step 2. For each possible first element nums[i]
+  // Make a bidirectional 2Sum search
+  for (let i = 0; i < nums.length - 2; i++) {
+    // Avoid duplication
+    if (i > 0 && nums[i] === nums[i - 1]) {
+      continue;
+    }
+
+    // Start the 2Sum search
+    let lo = i + 1;
+    let hi = nums.length - 1;
+    let target = -nums[i];
+
+    while (lo < hi) {
+      if (nums[lo] + nums[hi] === target) {
+        result.push([nums[i], nums[lo], nums[hi]]);
+
+        // Skip duplication
+        while (lo < hi && nums[lo] === nums[lo + 1]) lo++;
+        while (lo < hi && nums[hi] === nums[hi - 1]) hi--;
+
+        lo++;
+        hi--;
+      } else if (nums[lo] + nums[hi] > target) {
+        hi--;
+      } else {
+        lo++;
+      }
+    }
+  }
+
+  return result;
+};
